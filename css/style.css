@@ -1,3 +1,91 @@
-body {
-  background-color: blue;
+/***********************/
+/* Fonts & typography */
+/*********************/
+
+
+
+/****************/
+/* Body styles */
+/**************/
+
+* {
+  box-sizing: border-box;
+}
+
+/******************/
+/* Header styles */
+/****************/
+
+h1 {
+  font-family: 'Arvo', serif;
+  font-size: 24px;
+  text-align: center;
+  color: #5A6391;
+}
+
+/****************/
+/* Main styles */
+/**************/
+
+
+
+/****************/
+/* Grid styles */
+/**************/
+
+.grid {
+  width: 700px;
+  height: 700px;
+  background-color: #D3D6D9;
+  margin: 0 auto;
+  border-radius: 10px;
+  padding: 20px 20px;
+}
+
+/****************/
+/* Tile styles */
+/**************/
+
+.tiles {
+  width: 155px;;
+  height: 155px;
+  background-color: #6E7783;
+  float: left;
+  /*border: 1px solid white;*/
+  margin: 5px 5px;
+  border-radius: 5px;
+}
+
+#tile1 {
+  background-color: #F0F1F2;
+}
+
+#tile2 {
+  background-color: #A8ADB4;
+}
+
+#tile3 {
+  background-color: #9DC3C1;
+}
+
+#tile4 {
+  background-color: #77AAAD;
+}
+
+#tile5 {
+  background-color: #836E77;
+}
+
+/******************/
+/* Footer styles */
+/****************/
+
+footer {
+  height: 70px;
+  background-color: #6E7783;
+}
+
+footer p {
+  text-align: center;
+  color: #F0F1F2;
 }
