@@ -18,7 +18,9 @@
 
 h1 {
   font-family: 'Arvo', serif;
-  font-size: 24px;
+  font-size: 48px;
+  font-weight: 800;
+  margin-top: 20px;
   text-align: center;
   color: #5A6391;
 }
@@ -54,6 +56,7 @@ h1 {
   /*border: 1px solid white;*/
   margin: 5px 5px;
   border-radius: 5px;
+  /*box-shadow: 3px 3px #e2e3e6;*/
 }
 
 #tile1 {
@@ -86,6 +89,9 @@ footer {
 }
 
 footer p {
+  font-family: 'Arvo', serif;
   text-align: center;
+  margin-top: 72px;
+  padding-top: 25px;
   color: #F0F1F2;
 }
