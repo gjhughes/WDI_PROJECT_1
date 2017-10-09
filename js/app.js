@@ -1,45 +1,41 @@
 $(document).ready(function() {
 
-  let $grid;
-  let $tiles;
-  let $tileId;
+  const $tiles = $('.tiles');
+  console.log($tiles)
   const randomNumbers = [];
-  const computerPattern = [];
-  const userPattern = [];
+  let pattern;
 
-  $tiles = $('.tiles');
-
-
+  // random number function
   function randNum() {
-    for (var i = 0; randomNumbers.length < 6; i++) {
+    for (let i = 0; randomNumbers.length < 6; i++) {
       const num = Math.floor(Math.random() * 16);
       if(randomNumbers.includes(num)) {
         console.log('number in array already');
       } else {
         randomNumbers.push(num);
       }
-      // randomNumbers.indexOf(num) !== num ? randomNumbers.push(num) : console.log('already in array')
+      randomNumbers.sort((a, b) => a - b);
     }
   }
-  console.log(randomNumbers);
-  // function to selct random tiles and push id to array
-  function randomPattern() {
-    for (let i = 0; i < 6; i++) {
-      computerPattern.push($tiles[i].id);
-      $tiles[i].id.css('background-color', '#F0F1F2');
+
+  // light up tiles based on random number array
+  function displayTile() {
+    for (let i = 0; i < randomNumbers.length; i++) {
+      const randomNumber = randomNumbers[i];
+      const $element = $($tiles[randomNumber]);
+      setTimeout(function() {
+        $element.css('background', '#F0F1F2');
+        setTimeout(function(){
+          $element.css('background', '#6E7783');
+        }, 1000);
+      }, i*1000 + 1000);
     }
-    console.log(computerPattern);
   }
 
-  // function to light up tiles if they are pushed to the pattern array
-  // function lightUp() {
-  //   for (var i = 0; i < computerPattern.length; i++) {
-  //     if($tiles.id === )
-  //
-  //   }
-  // }
-
-  randNum()
+  randNum();
+  displayTile();
   console.log(randomNumbers);
 
 });
+
+// generat
