@@ -16,20 +16,55 @@
 /* Header styles */
 /****************/
 
-h1 {
+
+/***********************/
+/* Play button styles */
+/*********************/
+
+.play {
+  width: 75px;
+  height: 40px;
+  background-color: #6E7783;
+  border-radius: 10px;
+  border: 1px solid #F0F1F2;
+  color: white;
+  font-size: 14px;
+}
+
+.play:hover {
+  background-color: #F0F1F2;
+  border: 1px solid #6E7783;
+  color: #6E7783;
+  font-size: 20px;
+}
+
+/**********************/
+/* Scoreboard styles */
+/********************/
+
+header {
+  width: 500px;
+  height: 100px;
   font-family: 'Arvo', serif;
-  font-size: 48px;
-  font-weight: 800;
-  margin-top: 20px;
-  text-align: center;
+  margin: 0 auto;
   color: #6E7783;
 }
 
-/****************/
-/* Main styles */
-/**************/
+.lives-display {
+  font-size: 24px;
+}
 
+.score-board {
+  text-align: center;
+}
 
+.level-display {
+  float: left;
+}
+
+.score-display {
+  float: right;
+}
 
 /****************/
 /* Grid styles */
@@ -59,6 +94,10 @@ h1 {
   /*box-shadow: 3px 3px #e2e3e6;*/
 }
 
+.tiles:hover {
+  background-color: #A8ADB4;
+}
+
 #tile1 {
   background-color: #F0F1F2;
 }
@@ -84,14 +123,15 @@ h1 {
 /****************/
 
 footer {
-  height: 70px;
+  height: 60px;
   background-color: #6E7783;
 }
 
 footer p {
   font-family: 'Arvo', serif;
   text-align: center;
-  margin-top: 72px;
-  padding-top: 25px;
+  margin-top: 70px;
+  padding-top: 22px;
   color: #F0F1F2;
+  font-size: 14px;
 }
