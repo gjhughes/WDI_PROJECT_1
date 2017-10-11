@@ -2,7 +2,7 @@ let $tiles            = null;
 let $level            = null;
 let $lives            = null;
 let $score            = null;
-
+let $grid             = null;
 let patternLength     = 1;
 let lives             = 3;
 let level             = 0;
@@ -17,6 +17,7 @@ $(init);
 function init() {
 
   $tiles  = $('.tiles');
+  $grid   = $('.grid');
   $level  = $('.level');
   $lives  = $('.lives');
   $score  = $('.score');
@@ -28,6 +29,8 @@ function init() {
 function startGame() {
 
   score = 0;
+  lives = 3;
+  level = 0;
   updateScoreboard();
   generatePattern();
   displayPattern();
@@ -43,6 +46,7 @@ function nextLevel() {
   updateScoreboard();
   setTimeout(function() {
     $tiles.removeClass().addClass('tiles').empty();
+    gameOver();
     generatePattern();
     setTimeout(displayPattern, 500);
   }, 1000);
@@ -53,6 +57,17 @@ function updateScoreboard() {
   $level.html(level);
   $lives.html(lives);
   $score.html(score);
+}
+
+function gameOver() {
+  if(lives === 0) {
+    $grid.addClass('game-over');
+    $tiles.hide();
+    $grid.html('Game Over!');
+
+    $('button').on('click', init);
+
+  }
 }
 
 function generatePattern() {
@@ -106,6 +121,7 @@ function checkMatch() {
       for (let i = 0; i < computerPattern.length; i++) {
         $(`#${computerPattern[i]}`).addClass('wrong-pattern').html(i + 1);
       }
+      level--;
       patternLength--;
       nextLevel();
     }

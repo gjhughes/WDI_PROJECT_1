@@ -73,6 +73,14 @@ header {
   padding: 20px 20px;
 }
 
+.game-over {
+  background-color: #D3D6D9;
+  color: #6E7783;
+  font-size: 68px;
+  text-align: center;
+  padding-top: 300px;
+}
+
 /****************/
 /* Tile styles */
 /**************/
