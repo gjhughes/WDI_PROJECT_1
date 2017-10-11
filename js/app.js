@@ -34,10 +34,6 @@ function startGame() {
 }
 
 function nextLevel() {
-  $tiles.remove('html');
-  $tiles.off('click');
-  // reset tiles to original colour
-  // update pattern length
   score = score + patternLength;
   patternLength++;
   userClicks = 0;
@@ -45,10 +41,11 @@ function nextLevel() {
   computerPattern = [];
   updateScoreboard();
   setTimeout(function() {
-    $tiles.css('background', '#6E7783');
+    $tiles.removeClass().addClass('tiles').empty();
+    generatePattern();
+
+    setTimeout(displayPattern, 500);
   }, 500);
-  generatePattern();
-  displayPattern();
 }
 
 function updateScoreboard() {
@@ -71,9 +68,9 @@ function displayPattern() {
     const randomNumber = computerPattern[i];
     const $element = $($tiles[randomNumber]);
     setTimeout(function() {
-      $element.css('background', '#F0F1F2');
+      $element.addClass('show');
       setTimeout(function(){
-        $element.css('background', '#6E7783');
+        $element.removeClass('show');
 
         if (i + 1 === computerPattern.length) {
           checkMatch();
@@ -85,23 +82,29 @@ function displayPattern() {
 
 function checkMatch() {
   $tiles.on('click', function(e) {
-
     const $clicked = $(e.target).attr('id');
     if ($clicked === computerPattern[userClicks]) {
       userPattern.push($clicked);
       userClicks++;
 
-
-      $(e.target).css('background', '#9DC3C1');
+      $(e.target).addClass('chosen');
       if (userPattern.length === computerPattern.length) {
+        $tiles.off('click');
+
+        for (let i = 0; i < computerPattern.length; i++) {
+          $(`#${computerPattern[i]}`).addClass('right').html(i + 1);
+        }
+
         nextLevel();
       }
     } else {
       $(e.target).addClass('wrong');
+
       // display correct sequence.
-      for (var i = 0; i < computerPattern.length; i++) {
-        $(`#${computerPattern[i]}`).css('background', '#F0F1F2').html(i + 1);
+      for (let i = 0; i < computerPattern.length; i++) {
+        $(`#${computerPattern[i]}`).addClass('chosen').html(i + 1);
       }
+
       lives--;
       patternLength--;
       level--;
