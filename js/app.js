@@ -1,9 +1,9 @@
 let $tiles            = null;
 let $level            = null;
-let $score            = null;
 let $lives            = null;
-let $play             = null;
+let $score            = null;
 
+let patternLength     = 1;
 let lives             = 3;
 let level             = 0;
 let score             = 0;
@@ -16,72 +16,56 @@ $(init);
 
 function init() {
 
-  $play   = $('.play');
   $tiles  = $('.tiles');
   $level  = $('.level');
-  $score  = $('.score');
   $lives  = $('.lives');
+  $score  = $('score');
 
   $('button').on('click', startGame);
 
 }
 
-// function to start game
 function startGame() {
 
   updateScoreboard();
   generatePattern();
   displayPattern();
-  checkMatch();
 
 }
 
-// function to move on to next level
 function nextLevel() {
-
-  userClicks      = 0;
+  $tiles.remove('html');
+  $tiles.off('click');
+  // reset tiles to original colour
+  // update pattern length
+  score = score + patternLength;
+  patternLength++;
+  userClicks = 0;
+  userPattern = [];
   computerPattern = [];
-  userPattern     = [];
   updateScoreboard();
+  setTimeout(function() {
+    $tiles.css('background', '#6E7783');
+  }, 500);
   generatePattern();
   displayPattern();
-  checkMatch();
-
 }
-
 
 function updateScoreboard() {
-
   level++;
   $level.html(level);
+  $lives.html(lives);
   $score.html(score);
-
 }
 
-// function to decrease number of lives if user is incorrect
-// function decreaseLife() {
-//   lives--;
-//   $lives(lives);
-// }
-
-// function to end game if user runs out of lives
-// function gameOver() {
-//
-// }
-
-// function to generate random pattern of unique tiles
 function generatePattern() {
-  for (let i = 0; computerPattern.length < 6; i++) {
+  for (let i = 0; computerPattern.length < patternLength; i++) {
     const num = Math.floor(Math.random() * 16).toString();
-    if(computerPattern.includes(num)) {
-      console.log('number in array already');
-    } else {
+    if(!computerPattern.includes(num))
       computerPattern.push(num.toString());
-    }
   }
 }
 
-// light up tiles based on random number array
 function displayPattern() {
   for (let i = 0; i < computerPattern.length; i++) {
     const randomNumber = computerPattern[i];
@@ -90,65 +74,38 @@ function displayPattern() {
       $element.css('background', '#F0F1F2');
       setTimeout(function(){
         $element.css('background', '#6E7783');
-      }, 1000);
-    }, i*1000 + 1000);
+
+        if (i + 1 === computerPattern.length) {
+          checkMatch();
+        }
+      }, 500);
+    }, i*500 + 500);
   }
 }
-//
-// function to push user input into array
+
 function checkMatch() {
-  $tiles.one('click', function(e) {
+  $tiles.on('click', function(e) {
+
     const $clicked = $(e.target).attr('id');
     if ($clicked === computerPattern[userClicks]) {
-      console.log('correct');
       userPattern.push($clicked);
       userClicks++;
-      console.log(userPattern);
+
+
+      $(e.target).css('background', '#9DC3C1');
       if (userPattern.length === computerPattern.length) {
         nextLevel();
       }
-      // continue...
-    // } else {
-    //   console.log('wrong');
-    //   userClicks++;
-    //   // gameOver()
+    } else {
+      $(e.target).addClass('wrong');
+      // display correct sequence.
+      for (var i = 0; i < computerPattern.length; i++) {
+        $(`#${computerPattern[i]}`).css('background', '#F0F1F2').html(i + 1);
+      }
+      lives--;
+      patternLength--;
+      level--;
+      nextLevel();
     }
-
   });
 }
-//
-//   // function to check if user array and computer array match
-//   function checkMatch() {
-//     if(randomPattern.length === userPattern.length) {
-//       for (var i = 0; i < randomPattern.length; i++) {
-//         if(userPattern[i] === randomPattern[i]) {
-//           console.log('Match');
-//         } else {
-//           console.log('Incorrect');
-//         }
-//       }
-//     }
-//   }
-//
-// function to change colour of tiles if correct on is clicked
-// function tileColour() {
-//   $tiles.on('click', function(e) {
-//     const $clicked = $(e.target);
-//     $clicked.css('background', '#77AAAD');
-//   });
-// }
-//
-//   userInput();
-//   tileColour();
-//   randNum();
-//   displayPattern();
-//
-//
-//   console.log(randomPattern);
-//
-// });
-//
-// //
-// // once pattern is matched, tiles display second green colour
-// // if user is incorrect, pattern displays in red
-// // if user has lives left, stay on same level, otherwise game over
