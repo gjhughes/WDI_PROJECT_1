@@ -97,15 +97,25 @@ header {
 }
 
 .right {
-  background-color: green;
+  background-color: #77AAAD;
 }
 
-.wrong {
-  background-color: #836E77;
+.wrong-button {
+  background-color: #D3D6D9;
+}
+
+.wrong-pattern {
+  font-family: 'Arvo', serif;
+  background-color: #916684;
   animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
+  text-align: center;
+  padding-top:  50px;
+  font-size: 42px;
+  font-weight: 800;
+  color: #F0F1F2;
 }
 
 @keyframes shake {
