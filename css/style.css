@@ -36,6 +36,10 @@
   outline: none;
 }
 
+.game-over-message {
+  display: none;
+}
+
 .restart-btn {
   width: 200px;
   height: 75px;

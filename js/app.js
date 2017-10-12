@@ -5,18 +5,18 @@ let $score            = null;
 let $grid             = null;
 let $play             = null;
 let $restart          = null;
+let $gameover;
 let patternLength     = 1;
 let lives             = 3;
 let level             = 0;
 let score             = 0;
 let userClicks        = 0;
-let computerPattern   = [];
-let userPattern       = [];
+let computerPattern;
+let userPattern;
 
 $(init);
 
 function init() {
-
   $tiles   = $('.tiles');
   $grid    = $('.grid');
   $level   = $('.level');
@@ -24,19 +24,27 @@ function init() {
   $score   = $('.score');
   $play    = $('.play-btn');
   $restart = $('.restart-btn');
+  $gameover = $('.game-over-message');
 
   $restart.hide();
   $tiles.hide();
 
   $('button').on('click', startGame);
-
+  $restart.on('click', reset);
 }
 
 function startGame() {
-
+  $tiles.off('click mouseover mouseleave');
+  patternLength = 1;
   lives = 3;
   score = 0;
-  level = 0;
+  level = 1;
+  userClicks = 0;
+  computerPattern   = [];
+  userPattern       = [];
+  $lives.html(lives);
+  $level.html(patternLength);
+
   setTimeout(function() {
     displayTiles();
     updateScoreboard();
@@ -45,49 +53,38 @@ function startGame() {
       displayPattern();
     }, 500);
   }, 500);
-
 }
 
 function gameOver() {
-
   $grid.addClass('game-over');
-  // $tiles.hide();
-  $grid.html('Game Over!');
+  $tiles.hide();
+  $gameover.show();
   $grid.append($restart.show());
-  $restart.on('click', reset);
-
 }
-function reset(){
 
+function reset(){
   $restart.hide();
   $grid.removeClass('game-over');
-  $grid.html('');
+  $gameover.hide();
   $grid.addClass('grid').show();
+
   startGame();
-
 }
-function displayTiles() {
 
+function displayTiles() {
   $play.hide();
   $grid.removeClass('start-grid');
   setTimeout(function() {
     $tiles.fadeIn();
   }, 250);
-
 }
 
 function nextLevel() {
-
-  $tiles.off('click');
-
-  $tiles.on('mouseover', function(e) {
-    $(e.target).removeClass('hover');
-  });
-
   patternLength++;
   userClicks = 0;
   userPattern = [];
   computerPattern = [];
+  $tiles.off('click mouseover mouseleave');
   updateScoreboard();
   setTimeout(function() {
     $tiles.removeClass().addClass('tiles').empty();
@@ -103,12 +100,10 @@ function nextLevel() {
 }
 
 function updateScoreboard() {
-
   level++;
-  $level.html(level);
+  $level.html(patternLength);
   $lives.html(lives);
   $score.html(score);
-
 }
 
 function generatePattern() {
@@ -122,7 +117,6 @@ function generatePattern() {
 }
 
 function displayPattern() {
-
   for (let i = 0; i < computerPattern.length; i++) {
     const randomNumber = computerPattern[i];
     const $element = $($tiles[randomNumber]);
@@ -130,52 +124,55 @@ function displayPattern() {
       $element.addClass('show');
       setTimeout(function(){
         $element.removeClass('show');
-
         if (i + 1 === computerPattern.length) {
-          checkMatch();
+          tileOver();
+          $tiles.on('click', clickTile);
         }
       }, 500);
     }, i*500 + 500);
   }
-
 }
 
-function checkMatch() {
-  // set timeout
+function tileOver() {
   $tiles.on('mouseover', function(e) {
     $(e.target).addClass('hover');
   });
   $tiles.on('mouseleave', function(e) {
     $(e.target).removeClass('hover');
   });
-  $tiles.on('click', function(e) {
-    const $clicked = $(e.target).attr('id');
-    if ($clicked === computerPattern[userClicks]) {
-      score = score + 10;
-      userPattern.push($clicked);
-      userClicks++;
 
-      $(e.target).addClass('chosen');
-      if (userPattern.length === computerPattern.length) {
-        $tiles.off('click');
-        for (let i = 0; i < computerPattern.length; i++) {
-          $(`#${computerPattern[i]}`).addClass('right');
-        }
-        nextLevel();
-      }
-    } else {
-      $(e.target).addClass('wrong-button');
+}
 
-      lives--;
-      // display correct sequence.
+function clickTile(e) {
+  console.log('I fired');
+  const $clicked = $(e.target).attr('id');
+
+  if ($clicked === computerPattern[userClicks]) {
+    score = score + 10;
+    userPattern.push($clicked);
+    userClicks++;
+
+    $(e.target).addClass('chosen');
+
+    if (userPattern.length === computerPattern.length) {
+      // $tiles.off('click');
       for (let i = 0; i < computerPattern.length; i++) {
-        $(`#${computerPattern[i]}`).addClass('wrong-pattern').html(i + 1);
+        $(`#${computerPattern[i]}`).addClass('right');
       }
-
-      level--;
-      patternLength--;
       nextLevel();
     }
-  });
+  } else {
+    $(e.target).addClass('wrong-button');
+    console.log(lives);
+    lives--;
+    console.log(`lives when I remove thiem ${lives}`);
+    // display correct sequence.
+    for (let i = 0; i < computerPattern.length; i++) {
+      $(`#${computerPattern[i]}`).addClass('wrong-pattern').html(i + 1);
+    }
 
+    level--;
+    patternLength--;
+    nextLevel();
+  }
 }
