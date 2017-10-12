@@ -4,6 +4,7 @@ let $lives            = null;
 let $score            = null;
 let $grid             = null;
 let $play             = null;
+let $restart          = null;
 let patternLength     = 1;
 let lives             = 3;
 let level             = 0;
@@ -17,12 +18,14 @@ $(init);
 
 function init() {
 
-  $tiles  = $('.tiles');
-  $grid   = $('.grid');
-  $level  = $('.level');
-  $lives  = $('.lives');
-  $score  = $('.score');
-  $play   = $('.play-btn');
+  $tiles   = $('.tiles');
+  $grid    = $('.grid');
+  $level   = $('.level');
+  $lives   = $('.lives');
+  $score   = $('.score');
+  $play    = $('.play-btn');
+  $restart = $('.restart-btn');
+  $restart.hide();
   $tiles.hide();
   $('button').on('click', startGame);
 }
@@ -58,10 +61,14 @@ function nextLevel() {
   updateScoreboard();
   setTimeout(function() {
     $tiles.removeClass().addClass('tiles').empty();
-    gameOver();
     generatePattern();
     setTimeout(displayPattern, 500);
   }, 1000);
+  if(lives===0) {
+    setTimeout(function() {
+      gameOver();
+    }, 1500);
+  }
 }
 
 function updateScoreboard() {
@@ -72,14 +79,13 @@ function updateScoreboard() {
 }
 
 function gameOver() {
-  if(lives === 0) {
-    $grid.addClass('game-over');
-    $tiles.hide();
-    $grid.html('Game Over!');
+  $grid.addClass('game-over');
+  $tiles.hide();
+  $grid.html('Game Over!');
+  $grid.append($restart.show().addClass('restart-btn').html('Play Again'));
+  $('button').on('click', startGame);
 
-    $('button').on('click', init);
-
-  }
+  console.log($restart);
 }
 
 function displayTiles() {

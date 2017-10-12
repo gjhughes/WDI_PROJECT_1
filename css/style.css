@@ -34,6 +34,26 @@
   outline: none;
 }
 
+
+.restart-btn {
+  width: 200px;
+  height: 75px;
+  background-color: #9DC3C1;
+  border-radius: 10px;
+  border: 3px solid white;
+  color: white;
+  font-size: 24px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.restart-btn:hover {
+  background-color: #77AAAD;
+  transition: all .3s linear;
+  cursor: pointer;
+}
+
 .grow {
   transition: all .3s linear;
 }
@@ -41,7 +61,6 @@
 .grow:hover {
   background-color: #77AAAD;
   transform: scale(1.1);
-  /*border: 5px solid #D3D6D9;*/
 }
 
 /**********************/
@@ -57,7 +76,7 @@ header {
 }
 
 .score-board {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .lives-display {
@@ -74,6 +93,11 @@ header {
 
 .score-display {
   float: right;
+}
+
+.heart {
+  height: 18px;
+  width: 18px;
 }
 
 /****************/
@@ -95,11 +119,12 @@ header {
 }
 
 .game-over {
-  background-color: #D3D6D9;
+  background-color: white;
+  border: 7px solid #6E7783;
   color: #6E7783;
   font-size: 68px;
   text-align: center;
-  padding-top: 300px;
+  padding-top: 225px;
 }
 
 /****************/
