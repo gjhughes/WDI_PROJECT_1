@@ -7,29 +7,41 @@
 }
 
 /******************/
-/* Header styles */
+/* Button styles */
 /****************/
 
-
-/***********************/
-/* Play button styles */
-/*********************/
-
-.play {
-  width: 75px;
-  height: 40px;
-  background-color: #6E7783;
+.play-btn {
+  width: 300px;
+  height: 100px;
+  background-color: #9DC3C1;
   border-radius: 10px;
-  border: 1px solid #F0F1F2;
+  border: 3px solid white;
   color: white;
-  font-size: 14px;
+  font-size: 48px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 250px;
 }
 
-.play:hover {
-  background-color: #F0F1F2;
-  border: 1px solid #6E7783;
-  color: #6E7783;
-  font-size: 20px;
+.play-btn:hover {
+  background-color: #77AAAD;
+  color: white;
+  font-size: 48px;
+  cursor: pointer;
+}
+
+.play-btn:focus {
+  outline: none;
+}
+
+.grow {
+  transition: all .3s linear;
+}
+
+.grow:hover {
+  background-color: #77AAAD;
+  transform: scale(1.1);
+  /*border: 5px solid #D3D6D9;*/
 }
 
 /**********************/
@@ -42,6 +54,10 @@ header {
   font-family: 'Arvo', serif;
   margin: 0 auto;
   color: #6E7783;
+}
+
+.score-board {
+  margin-top: 20px;
 }
 
 .lives-display {
@@ -73,6 +89,11 @@ header {
   padding: 20px 20px;
 }
 
+.start-grid {
+  background-color: white;
+  border: 7px solid #6E7783;
+}
+
 .game-over {
   background-color: #D3D6D9;
   color: #6E7783;
@@ -94,6 +115,11 @@ header {
   margin: 5px 5px;
   border-radius: 10px;
   /*box-shadow: 3px 3px #e2e3e6;*/
+}
+
+.hover {
+  background-color: #A8ADB4;
+  cursor: pointer;
 }
 
 .show {
@@ -156,8 +182,8 @@ footer {
 footer p {
   font-family: 'Arvo', serif;
   text-align: center;
-  margin-top: 70px;
-  padding-top: 22px;
+  margin-top: 45px;
+  padding-top: 20px;
   color: #F0F1F2;
   font-size: 14px;
 }

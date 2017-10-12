@@ -3,6 +3,7 @@ let $level            = null;
 let $lives            = null;
 let $score            = null;
 let $grid             = null;
+let $play             = null;
 let patternLength     = 1;
 let lives             = 3;
 let level             = 0;
@@ -21,9 +22,9 @@ function init() {
   $level  = $('.level');
   $lives  = $('.lives');
   $score  = $('.score');
-
+  $play   = $('.play-btn');
+  $tiles.hide();
   $('button').on('click', startGame);
-
 }
 
 function startGame() {
@@ -31,14 +32,25 @@ function startGame() {
   score = 0;
   lives = 3;
   level = 0;
-  updateScoreboard();
-  generatePattern();
-  displayPattern();
+  setTimeout(function() {
+    displayTiles();
+    updateScoreboard();
+    generatePattern();
+    setTimeout(function() {
+      displayPattern();
+    }, 500);
+  }, 500);
+
 
 }
 
 function nextLevel() {
   $tiles.off('click');
+
+  $tiles.on('mouseover', function(e) {
+    $(e.target).removeClass('hover');
+  });
+
   patternLength++;
   userClicks = 0;
   userPattern = [];
@@ -70,6 +82,15 @@ function gameOver() {
   }
 }
 
+function displayTiles() {
+  $play.hide();
+  $grid.removeClass('start-grid');
+  setTimeout(function() {
+    $tiles.fadeIn();
+  }, 250);
+
+}
+
 function generatePattern() {
   for (let i = 0; computerPattern.length < patternLength; i++) {
     const num = Math.floor(Math.random() * 16).toString();
@@ -89,6 +110,7 @@ function displayPattern() {
 
         if (i + 1 === computerPattern.length) {
           checkMatch();
+
         }
       }, 500);
     }, i*500 + 500);
@@ -96,6 +118,13 @@ function displayPattern() {
 }
 
 function checkMatch() {
+  // set timeout
+  $tiles.on('mouseover', function(e) {
+    $(e.target).addClass('hover');
+  });
+  $tiles.on('mouseleave', function(e) {
+    $(e.target).removeClass('hover');
+  });
   $tiles.on('click', function(e) {
     const $clicked = $(e.target).attr('id');
     if ($clicked === computerPattern[userClicks]) {
