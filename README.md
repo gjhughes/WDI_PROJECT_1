@@ -9,6 +9,5 @@ For the first project of WDI 30 we were set the task of bulding a game by applyi
 
 The inspiration for the game came from an iPhone game called RE-TRACE and my aim was to recreate the overall feel and gameplay but with my own take on how it should be styled.
 
-
-
+/Users/Gavin/Desktop/Screen Shot 2017-10-15 at 16.26.31.png
 
