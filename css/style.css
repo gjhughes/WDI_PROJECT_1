@@ -5,6 +5,14 @@
 * {
   box-sizing: border-box;
   font-family: 'Arvo', serif;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
 }
 
 /******************/
@@ -81,7 +89,7 @@ header {
 }
 
 .score-board {
-  margin-top: 20px;
+  margin-top: 22px;
 }
 
 .lives-display {
@@ -108,6 +116,7 @@ header {
 .invis {
   color: white;
 }
+
 /****************/
 /* Grid styles */
 /**************/
@@ -206,16 +215,12 @@ header {
 /******************/
 /* Footer styles */
 /****************/
-
-footer {
+.footer {
+  font-family: 'Arvo', serif;
+  margin-top: 67px;
   height: 60px;
   background-color: #6E7783;
-}
-
-footer p {
-  font-family: 'Arvo', serif;
   text-align: center;
-  margin-top: 45px;
   padding-top: 25px;
   color: #F0F1F2;
   font-size: 14px;

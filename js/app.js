@@ -5,7 +5,8 @@ let $score            = null;
 let $grid             = null;
 let $play             = null;
 let $restart          = null;
-let $gameover;
+let $gameover         = null;
+
 let patternLength     = 1;
 let lives             = 3;
 let level             = 0;
@@ -14,25 +15,25 @@ let userClicks        = 0;
 let computerPattern;
 let userPattern;
 //timeouts
+let gameoverTimeout;
 let flashPattern;
 let removeFlash;
 let displayPatternTimeout;
-let gameoverTimeout;
 let nowDisplayIt;
 let fadeInTiles;
 let playGameTimeout;
-let timeouts = [];
+
 
 $(init);
 
 function init() {
-  $tiles   = $('.tiles');
-  $grid    = $('.grid');
-  $level   = $('.level');
-  $lives   = $('.lives');
-  $score   = $('.score');
-  $play    = $('.play-btn');
-  $restart = $('.restart-btn');
+  $tiles    = $('.tiles');
+  $grid     = $('.grid');
+  $level    = $('.level');
+  $lives    = $('.lives');
+  $score    = $('.score');
+  $play     = $('.play-btn');
+  $restart  = $('.restart-btn');
   $gameover = $('.game-over-message');
 
   $restart.hide();
@@ -44,11 +45,11 @@ function init() {
 
 function startGame() {
   $tiles.off();
-  patternLength = 1;
-  lives = 3;
-  score = 0;
-  level = 1;
-  userClicks = 0;
+  patternLength     = 1;
+  lives             = 3;
+  score             = 0;
+  level             = 1;
+  userClicks        = 0;
   computerPattern   = [];
   userPattern       = [];
   $lives.html(lives);
@@ -66,7 +67,6 @@ function playGame() {
 }
 
 function gameOver() {
-  console.log('now game over function is called');
   $grid.addClass('game-over');
   $tiles.hide();
   $gameover.show();
@@ -78,7 +78,6 @@ function reset(){
   $grid.removeClass('game-over');
   $gameover.hide();
   $grid.addClass('grid').show();
-
   startGame();
 }
 
@@ -86,7 +85,6 @@ function displayTiles() {
   $play.hide();
   $grid.removeClass('start-grid');
   fadeInTiles = setTimeout(function() {
-    console.log('fade in tiles');
     $tiles.fadeIn();
     clearTimeout(fadeInTiles);
   }, 250);
@@ -94,20 +92,16 @@ function displayTiles() {
 
 function nextLevel() {
 
-  patternLength++;
-  userClicks = 0;
-  userPattern = [];
+  patternLength   ++;
+  userClicks      = 0;
+  userPattern     = [];
   computerPattern = [];
   $tiles.off();
   updateScoreboard();
 
-  if(lives===0) {
-    // clearTimeout(flashPattern);
-    // clearTimeout(removeFlash);
+  if(lives === 0) {
 
     gameoverTimeout = setTimeout(function() {
-      console.log('before gameover display');
-      // clearTimeout(gameoverTimeout);
       $tiles.removeClass().addClass('tiles').empty();
       gameOver();
     }, 1500);
@@ -118,20 +112,15 @@ function nextLevel() {
   }
 
   displayPatternTimeout = setTimeout(function() {
-    console.log('timeout before displaying pattern');
     $tiles.removeClass().addClass('tiles').empty();
     generatePattern();
     clearTimeout(displayPatternTimeout);
     nowDisplayIt = setTimeout(displayPattern, 500);
   }, 1000);
-
-  // clearTimeout(displayPatternTimeout);
-
-
 }
 
 function updateScoreboard() {
-  level++;
+  level ++;
   $level.html(patternLength);
   $lives.html(lives);
   $score.html(score);
@@ -149,26 +138,18 @@ function generatePattern() {
 
 function displayPattern() {
   clearTimeout(nowDisplayIt);
-  console.log('display pattern is invoked');
   for (let i = 0; i < computerPattern.length; i++) {
-    console.log('for loop runs');
     const randomNumber = computerPattern[i];
     const $element = $($tiles[randomNumber]);
     flashPattern = setTimeout(function() {
-      console.log('flash pattern');
-      // clearTimeout(flashPattern);
       $element.addClass('show');
       removeFlash = setTimeout(function(){
-        console.log('get rid of the flash');
-        // clearTimeout(removeFlash);
         $element.removeClass('show');
         if (i + 1 === computerPattern.length) {
           tileOver();
           $tiles.on('click', clickTile);
         }
-        // clearTimeout(removeFlash);
       }, 500);
-      // clearTimeout(flashPattern);
     }, i*500 + 500);
   }
 }
@@ -184,7 +165,6 @@ function tileOver() {
 }
 
 function clickTile(e) {
-  console.log('I fired');
   $(e.target).off();
   const $clicked = $(e.target).attr('id');
 
@@ -196,7 +176,6 @@ function clickTile(e) {
     $(e.target).addClass('chosen');
 
     if (userPattern.length === computerPattern.length) {
-      // $tiles.off('click');
       for (let i = 0; i < computerPattern.length; i++) {
         $(`#${computerPattern[i]}`).addClass('right');
       }
@@ -204,10 +183,7 @@ function clickTile(e) {
     }
   } else {
     $(e.target).addClass('wrong-button');
-    console.log(lives);
     lives--;
-    console.log(`lives when I remove thiem ${lives}`);
-    // display correct sequence.
     for (let i = 0; i < computerPattern.length; i++) {
       $(`#${computerPattern[i]}`).addClass('wrong-pattern').html(i + 1);
     }
